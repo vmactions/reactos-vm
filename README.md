@@ -1,6 +1,6 @@
-# Run GitHub CI in DragonflyBSD 
+# Run GitHub CI in ReactOS 
 
-![Test](https://github.com/vmactions/dragonflybsd-vm/workflows/Test/badge.svg)
+![Test](https://github.com/vmactions/reactos-vm/workflows/Test/badge.svg)
 
 
 
@@ -15,7 +15,7 @@ Powered by [AnyVM.org](https://anyvm.org)
 >
 > These VMs are now AI-ready. With the **[vmactions-ci skill](https://github.com/vmactions/vmactions-skill)**, an AI coding agent -- Claude Code, Codex, Copilot CLI, Gemini CLI, and others -- understands the full vmactions interface and writes the GitHub Actions CI for you, **automatically**.
 >
-> Just describe what you want in plain language, e.g. *"run my tests on DragonflyBSD"* or *"check that my project builds on DragonflyBSD aarch64"*, and the agent generates a correct, ready-to-commit `test.yml`. It will:
+> Just describe what you want in plain language, e.g. *"run my tests on ReactOS"* or *"check that my project builds on ReactOS aarch64"*, and the agent generates a correct, ready-to-commit `test.yml`. It will:
 >
 > - pick the right action, `release`, and `arch` for your target;
 > - install your toolchain and dependencies in the `prepare` step;
@@ -27,25 +27,63 @@ Powered by [AnyVM.org](https://anyvm.org)
 >
 > ### >> [Get the vmactions-ci skill](https://github.com/vmactions/vmactions-skill) <<
 
-Use this action to run your CI in DragonflyBSD.
+Use this action to run your CI in ReactOS.
 
-The github workflow only supports Ubuntu, Windows and MacOS. But what if you need to use DragonflyBSD?
+The github workflow only supports Ubuntu, Windows and MacOS. But what if you need to use ReactOS?
 
 
 All the supported releases are here:
 
 
 
-| Release | x86_64(amd64) |
+| Release | i386 (x86 32-bit) |
 |---------|---------|
-| 6.4.2 | ✅ (rsync,scp,nfs) |
-| 6.4.1 | ✅ (rsync,scp,nfs) |
-| 6.4.0 | ✅ (rsync,scp,nfs) |
+| 0.4.15 | ✅ (tar) |
 
-<!-- arch-label: x86_64 = x86_64(amd64) -->
-Note: sshfs is not offered on DragonFlyBSD -- the sshfs (FUSE) mount is
-read-only in practice (the guest can read the shared dir, but writing a file
-back into the mount fails), so only rsync / scp / nfs are listed.
+<!-- arch-label: i386 = i386 (x86 32-bit) -->
+
+> **Note:** ReactOS support is a **tech preview**. Remote command execution
+> works, and file sync works via `tar` streamed over the same telnet channel:
+> ReactOS ships no archiver of its own, so the builder bakes **busybox-w32**
+> (a single static GPL PE32, verified to run on ReactOS) at `C:\anyvm\tar.exe`
+> and the host streams a ustar archive down the connection in both
+> directions (`anyvmtd` escapes outbound IAC so the binary stream survives).
+>
+> ReactOS ships no remote-access server of any kind -- `base/applications/network`
+> has a telnet *client*, and the rapps database offers only PuTTY and WinSCP,
+> also clients -- so this builder supplies its own: `files/anyvmtd.c`, a small
+> Win32 telnet server cross-compiled with mingw-w64, copied onto the installed
+> volume while it is offline and registered as a boot-time service from the
+> unattended answer file. The guest is driven over that channel
+> (`VM_TRANSPORT=telnet`, the same engine path plan9-builder uses).
+> It authenticates nobody and is reachable only through the loopback-bound
+> QEMU hostfwd.
+>
+> For sync, the guest was surveyed live rather than assumed. There is no sshd
+> and no ssh client (so no rsync / sshfs / scp), no 9P client, no SMB
+> redirector at all (`mrxsmb.sys` is absent, which also rules out QEMU's
+> built-in slirp `smb=` share), and ReactOS's `certutil` is a stub with only
+> `-hashfile` -- no `-encode` / `-decode`, so even a base64-over-the-telnet-
+> channel fallback is out.
+>
+> **NFS is the interesting one: it ships, it is correctly registered, and it
+> still does not work.** The image carries the full ms-nfs41-client stack
+> (`nfs41_driver.sys`, `nfsd.exe`, `nfs41_np.dll`), `ProviderOrder` is already
+> `nfs41_driver`, and `net start nfs41_driver` reaches STATE 4 RUNNING. But
+> the daemon service -- named `pnfs`, not `nfsd` -- hangs in START_PENDING,
+> and `net use Z: \\<host>\<export>` fails with System error 2 against an
+> export the guest can ping. That is a ReactOS bug, not a builder gap.
+>
+> (The other candidates that would have needed new code -- driving the guest's
+> `ftp`/`ncftp` client from a host-side FTP server, or a put/get protocol in
+> `anyvmtd` -- are superseded by the tar stream.)
+
+> **Note:** 0.4.15 (2025-03-21) is the newest ReactOS *release*, and x86
+> 32-bit is the only architecture it ships. Newer-looking tags in the
+> repository -- `0.4.16`, `0.4.16-RC2`, `0.4.17-dev` -- are bare git tags with
+> no published release and no downloadable media (`releases/tags/0.4.16`
+> answers 404), which is why `hooks/upstream_check.py` filters on a real
+> release carrying an `*-iso.zip` asset rather than on tag names.
 
 
 
@@ -62,28 +100,25 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-    name: A job to run test in DragonflyBSD
+    name: A job to run test in ReactOS
     env:
       MYTOKEN : ${{ secrets.MYTOKEN }}
       MYTOKEN2: "value2"
     steps:
     - uses: actions/checkout@v6
-    - name: Test in DragonflyBSD
+    - name: Test in ReactOS
       id: test
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
         envs: 'MYTOKEN MYTOKEN2'
         usesh: true
         prepare: |
-          pkg install -y socat
+          ver
 
         run: |
-          pwd
-          ls -lah
-          whoami
-          env
-          uname -a
-          echo "OK"
+          ver
+          dir C:\work
+
 
 
 
@@ -91,7 +126,7 @@ jobs:
 ```
 
 
-The latest major version is: `v1`, which is the most recommended to use. (You can also use the latest full version: `v1.3.1`)  
+The latest major version is: `v0`, which is the most recommended to use. (You can also use the latest full version: `v0.0.0`)  
 
 
 If you are migrating from the previous `v0`, please change the `runs-on: ` to `runs-on: ubuntu-latest`
@@ -126,7 +161,7 @@ The code is shared from the host to the VM via `rsync` by default, you can choos
 
     - name: Test
       id: test
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
         sync: sshfs  # or: nfs
 
@@ -148,7 +183,7 @@ When using `rsync` or `scp`,  you can define `copyback: false` to not copy files
 
     - name: Test
       id: test
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
         sync: rsync
         copyback: false
@@ -171,7 +206,7 @@ You can add NAT port between the host and the VM.
 ...
     - name: Test
       id: test
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
         nat: |
           "8080": "80"
@@ -190,7 +225,7 @@ The default memory of the VM is 6144MB, you can use `mem` option to set the memo
 ...
     - name: Test
       id: test
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
         mem: 4096
 ...
@@ -204,7 +239,7 @@ The VM is using all the cpu cores of the host by default, you can use `cpu` opti
 ...
     - name: Test
       id: test
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
         cpu: 3
 ...
@@ -213,15 +248,15 @@ The VM is using all the cpu cores of the host by default, you can use `cpu` opti
 
 ## 5. Select release
 
-It uses [the DragonflyBSD 6.4.2](conf/default.release.conf) by default, you can use `release` option to use another version of DragonflyBSD:
+It uses [the ReactOS 0.4.15](conf/default.release.conf) by default, you can use `release` option to use another version of ReactOS:
 
 ```yaml
 ...
     - name: Test
       id: test
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
-        release: "6.4.0"
+        release: "0.4.15"
 ...
 ```
 
@@ -231,13 +266,13 @@ You can also give only the leading, `.` separated part of a release. The newest 
 ...
     - name: Test
       id: test
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
-        release: "6"
+        release: "0"
 ...
 ```
 
-Here `release: "6"` runs the newest `6.x` release of DragonflyBSD. Give more parts to narrow it down: `release: "6.4"` runs the newest `6.4.x`. Each part you give has to match in full, so a release that does not exist fails the job instead of quietly falling back to another one.
+Here `release: "0"` runs the newest `0.x` release of ReactOS. Give more parts to narrow it down: `release: "0.4"` runs the newest `0.4.x`. Each part you give has to match in full, so a release that does not exist fails the job instead of quietly falling back to another one.
 
 ## 6. Select architecture
 
@@ -247,7 +282,7 @@ The vm is using x86_64(AMD64) by default, but you can use `arch` option to chang
 ...
     - name: Test
       id: test
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
         arch: aarch64
 ...
@@ -269,16 +304,16 @@ Support custom shell:
     - uses: actions/checkout@v6
     - name: Start VM
       id: vm
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
         sync: nfs
     - name: Custom shell step 1
-      shell: dragonflybsd {0}
+      shell: reactos {0}
       run: |
         pwd
         echo "this is step 1, running inside the VM"
     - name: Custom shell step 2
-      shell: dragonflybsd {0}
+      shell: reactos {0}
       run: |
         pwd
         echo "this is step 2, running inside the VM"
@@ -300,7 +335,7 @@ You can also use `custom-shell-name` to set a custom name for the shell wrapper:
     - uses: actions/checkout@v6
     - name: Start VM
       id: vm
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
         sync: nfs
         custom-shell-name: vmsh
@@ -326,7 +361,7 @@ If the time in VM is not correct, You can use `sync-time` option to synchronize 
 ...
     - name: Test
       id: test
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
         sync-time: true
 ...
@@ -341,7 +376,7 @@ By default, the action caches `apt` packages on the host and VM images/artifacts
 ...
     - name: Test
       id: test
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
         disable-cache: true
 ...
@@ -356,11 +391,11 @@ The `prepare` step (installing packages etc.) normally runs on every build. With
 ...
     - name: Test
       id: test
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
         cache-after-prepare: true
         prepare: |
-          pkg install -y socat
+          ver
         run: |
           ...
 ...
@@ -389,7 +424,7 @@ Then use it in the workflow:
 ...
     - name: Test
       id: test
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
         debug-on-error: ${{ vars.DEBUG_ON_ERROR }}
 
@@ -402,7 +437,7 @@ You can also set the `vnc-password` parameter to set a custom password to protec
 ...
     - name: Test
       id: test
-      uses: vmactions/dragonflybsd-vm@v1
+      uses: vmactions/reactos-vm@v0
       with:
         debug-on-error: ${{ vars.DEBUG_ON_ERROR }}
         vnc-password: ${{ secrets.VNC_PASSWORD }}
@@ -419,7 +454,7 @@ See more: [debug on error](https://github.com/vmactions/.github/wiki/debug%E2%80
 
 # Under the hood
 
-We use Qemu to run the DragonflyBSD VM.
+We use Qemu to run the ReactOS VM.
 
 
 
