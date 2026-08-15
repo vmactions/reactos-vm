@@ -105,13 +105,12 @@ jobs:
       MYTOKEN : ${{ secrets.MYTOKEN }}
       MYTOKEN2: "value2"
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Test in ReactOS
       id: test
       uses: vmactions/reactos-vm@v0
       with:
         envs: 'MYTOKEN MYTOKEN2'
-        usesh: true
         prepare: |
           ver
 
@@ -145,6 +144,8 @@ All the source code tree in the Host machine are mounted into the VM.
 All the `GITHUB_*` as well as `CI=true` env variables are passed into the VM.
 
 So, you will have the same directory and same default env variables when you `run` the CI script.
+
+The `prepare` and `run` scripts are always executed with `sh` in the VM, whatever the default login shell of the VM is.
 
 
 
@@ -301,7 +302,7 @@ Support custom shell:
 ```yaml
 ...
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Start VM
       id: vm
       uses: vmactions/reactos-vm@v0
@@ -332,7 +333,7 @@ You can also use `custom-shell-name` to set a custom name for the shell wrapper:
 ```yaml
 ...
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Start VM
       id: vm
       uses: vmactions/reactos-vm@v0
