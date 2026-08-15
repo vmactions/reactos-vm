@@ -1,0 +1,2 @@
+          dir C:\work
+          echo tar-vm-data> C:\work\fromvm.txt
