@@ -1,51 +1,19 @@
-          - release: "6.4.0"
+          - release: "0.4.15"
             arch: aarch64
-          - release: "6.4.0"
+          - release: "0.4.15"
             arch: riscv64
-          - release: "6.4.0"
+          - release: "0.4.15"
             arch: powerpc64
-          - release: "6.4.0"
+          - release: "0.4.15"
             arch: sparc64
-          - release: "6.4.0"
+          - release: "0.4.15"
             arch: ppc64le
-          - release: "6.4.0"
+          - release: "0.4.15"
             arch: s390x
-          - release: "6.4.0"
-            arch: i386
-          - release: "6.4.0"
+          - release: "0.4.15"
             arch: loongarch64
-          - release: "6.4.1"
-            arch: aarch64
-          - release: "6.4.1"
-            arch: riscv64
-          - release: "6.4.1"
-            arch: powerpc64
-          - release: "6.4.1"
-            arch: sparc64
-          - release: "6.4.1"
-            arch: ppc64le
-          - release: "6.4.1"
-            arch: s390x
-          - release: "6.4.1"
-            arch: i386
-          - release: "6.4.1"
-            arch: loongarch64
-          - release: "6.4.2"
-            arch: aarch64
-          - release: "6.4.2"
-            arch: riscv64
-          - release: "6.4.2"
-            arch: powerpc64
-          - release: "6.4.2"
-            arch: sparc64
-          - release: "6.4.2"
-            arch: ppc64le
-          - release: "6.4.2"
-            arch: s390x
-          - release: "6.4.2"
-            arch: i386
-          - release: "6.4.2"
-            arch: loongarch64
+          - release: "0.4.15"
+            arch: armv7
           - release: ""
             arch: aarch64
           - release: ""
@@ -59,6 +27,6 @@
           - release: ""
             arch: s390x
           - release: ""
-            arch: i386
-          - release: ""
             arch: loongarch64
+          - release: ""
+            arch: armv7

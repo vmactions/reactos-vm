@@ -1,24 +1,24 @@
 {
-  "name": "vmactions-DragonflyBSD",
+  "name": "vmactions-ReactOS",
   "version": "",
-  "description": "GitHub actions for DragonflyBSD",
+  "description": "GitHub actions for ReactOS",
   "type": "module",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vmactions/dragonflybsd-vm.git"
+    "url": "git+https://github.com/vmactions/reactos-vm.git"
   },
   "keywords": [
     "GitHub",
     "Actions",
-    "DragonflyBSD"
+    "ReactOS"
   ],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vmactions/dragonflybsd-vm/issues"
+    "url": "https://github.com/vmactions/reactos-vm/issues"
   },
-  "homepage": "https://github.com/vmactions/dragonflybsd-vm",
+  "homepage": "https://github.com/vmactions/reactos-vm",
   "dependencies": {
     "@actions/core": "^3.0.0",
     "@actions/exec": "^3.0.0",
