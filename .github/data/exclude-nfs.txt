@@ -1,0 +1,8 @@
+          - release: "0.4.15"
+            arch: ""
+          - release: "0.4.15"
+            arch: "i386"
+          - release: ""
+            arch: ""
+          - release: ""
+            arch: "i386"
