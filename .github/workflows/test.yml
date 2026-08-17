@@ -130,7 +130,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains(fromJSON('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}')[matrix.arch == '' && 'x86_64' || matrix.arch], 'sshfs') }}
       id: test
-      uses: vmactions/reactos-vm@29b40a80099c8c8be393e4ad802e680d1bd11f3d
+      uses: vmactions/reactos-vm@83f01ded9de79a9c3521ae8855cb658ec108dfeb
       with:
         envs: 'DEBUG MYTOKEN MYTOKEN2'
         prepare: |
@@ -291,7 +291,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains(fromJSON('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}')[matrix.arch == '' && 'x86_64' || matrix.arch], 'nfs') }}
       id: test
-      uses: vmactions/reactos-vm@29b40a80099c8c8be393e4ad802e680d1bd11f3d
+      uses: vmactions/reactos-vm@83f01ded9de79a9c3521ae8855cb658ec108dfeb
       with:
         envs: 'DEBUG MYTOKEN MYTOKEN2'
         prepare: |
@@ -460,7 +460,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains(fromJSON('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}')[matrix.arch == '' && 'x86_64' || matrix.arch], 'scp') }}
       id: test
-      uses: vmactions/reactos-vm@29b40a80099c8c8be393e4ad802e680d1bd11f3d
+      uses: vmactions/reactos-vm@83f01ded9de79a9c3521ae8855cb658ec108dfeb
       with:
         envs: 'DEBUG MYTOKEN MYTOKEN2'
         prepare: |
@@ -587,7 +587,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}', 'tar') }}
       id: test
-      uses: vmactions/reactos-vm@29b40a80099c8c8be393e4ad802e680d1bd11f3d
+      uses: vmactions/reactos-vm@83f01ded9de79a9c3521ae8855cb658ec108dfeb
       with:
         mem: 4096
         debug: true
@@ -657,7 +657,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}', '9p') }}
       id: test
-      uses: vmactions/reactos-vm@29b40a80099c8c8be393e4ad802e680d1bd11f3d
+      uses: vmactions/reactos-vm@83f01ded9de79a9c3521ae8855cb658ec108dfeb
       with:
         mem: 4096
         debug: true
@@ -786,7 +786,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains(fromJSON('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}')[matrix.arch == '' && 'x86_64' || matrix.arch], 'rsync') }}
       id: test
-      uses: vmactions/reactos-vm@29b40a80099c8c8be393e4ad802e680d1bd11f3d
+      uses: vmactions/reactos-vm@83f01ded9de79a9c3521ae8855cb658ec108dfeb
       with:
         envs: 'MYTOKEN MYTOKEN2'
         prepare: |
@@ -942,7 +942,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains(fromJSON('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}')[matrix.arch == '' && 'x86_64' || matrix.arch], 'rsync') }}
       id: test
-      uses: vmactions/reactos-vm@29b40a80099c8c8be393e4ad802e680d1bd11f3d
+      uses: vmactions/reactos-vm@83f01ded9de79a9c3521ae8855cb658ec108dfeb
       with:
         envs: 'MYTOKEN MYTOKEN2'
         prepare: |
@@ -1055,7 +1055,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains(fromJSON('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}')['x86_64'], 'rsync') }}
       id: test
-      uses: vmactions/reactos-vm@29b40a80099c8c8be393e4ad802e680d1bd11f3d
+      uses: vmactions/reactos-vm@83f01ded9de79a9c3521ae8855cb658ec108dfeb
       with:
         mem: 4096
         debug: true
@@ -1112,7 +1112,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains(fromJSON('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}')['x86_64'], 'rsync') }}
       id: test
-      uses: vmactions/reactos-vm@29b40a80099c8c8be393e4ad802e680d1bd11f3d
+      uses: vmactions/reactos-vm@83f01ded9de79a9c3521ae8855cb658ec108dfeb
       with:
         mem: 4096
         debug: true
@@ -1185,7 +1185,7 @@ jobs:
     - name: Test in ReactOS
       id: testerr
       continue-on-error: true
-      uses: vmactions/reactos-vm@29b40a80099c8c8be393e4ad802e680d1bd11f3d
+      uses: vmactions/reactos-vm@83f01ded9de79a9c3521ae8855cb658ec108dfeb
       with:
         debug: true
         # A command that EXISTS and fails, rather than `false` or a made-up
@@ -1231,7 +1231,7 @@ jobs:
     - name: Test in ReactOS
       id: testpass
       continue-on-error: true
-      uses: vmactions/reactos-vm@29b40a80099c8c8be393e4ad802e680d1bd11f3d
+      uses: vmactions/reactos-vm@83f01ded9de79a9c3521ae8855cb658ec108dfeb
       with:
         debug: true
         # No `true` and no double quotes: this body runs on every guest, and
