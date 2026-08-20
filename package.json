@@ -1,6 +1,6 @@
 {
   "name": "vmactions-ReactOS",
-  "version": "",
+  "version": "1.0.0",
   "description": "GitHub actions for ReactOS",
   "type": "module",
   "main": "index.js",
