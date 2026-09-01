@@ -264,7 +264,7 @@ The VM is using all the cpu cores of the host by default, you can use `cpu` opti
 
 ## 5. Select release
 
-It uses [the ReactOS 0.4.15](conf/default.release.conf) by default, you can use `release` option to use another version of ReactOS:
+It uses [the ReactOS 0.4.16](conf/default.release.conf) by default, you can use `release` option to use another version of ReactOS:
 
 ```yaml
 ...
