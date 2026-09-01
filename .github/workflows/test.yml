@@ -40,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        release: [ "0.4.15"
+        release: [ "0.4.15", "0.4.16"
 , ""]
         arch: [ "aarch64", "", "riscv64", "powerpc64", "sparc64", "ppc64le", "s390x", "i386", "loongarch64", "armv7"]
         runs: [ "ubuntu-24.04", "ubuntu-24.04-arm"]
@@ -84,6 +84,22 @@ jobs:
             arch: loongarch64
           - release: "0.4.15"
             arch: armv7
+          - release: "0.4.16"
+            arch: aarch64
+          - release: "0.4.16"
+            arch: riscv64
+          - release: "0.4.16"
+            arch: powerpc64
+          - release: "0.4.16"
+            arch: sparc64
+          - release: "0.4.16"
+            arch: ppc64le
+          - release: "0.4.16"
+            arch: s390x
+          - release: "0.4.16"
+            arch: loongarch64
+          - release: "0.4.16"
+            arch: armv7
           - release: ""
             arch: aarch64
           - release: ""
@@ -103,6 +119,10 @@ jobs:
           - release: "0.4.15"
             arch: ""
           - release: "0.4.15"
+            arch: "i386"
+          - release: "0.4.16"
+            arch: ""
+          - release: "0.4.16"
             arch: "i386"
           - release: ""
             arch: ""
@@ -130,7 +150,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains(fromJSON('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}')[matrix.arch == '' && 'x86_64' || matrix.arch], 'sshfs') }}
       id: test
-      uses: vmactions/reactos-vm@b3033c244d8bcd1a6f59e794252c159f53088846
+      uses: vmactions/reactos-vm@befd295c85cd554d3ac12d1002cfdb6141b838be
       with:
         envs: 'DEBUG MYTOKEN MYTOKEN2'
         prepare: |
@@ -209,7 +229,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        release: [ "0.4.15"
+        release: [ "0.4.15", "0.4.16"
 , ""]
         arch: [ "aarch64", "", "riscv64", "powerpc64", "sparc64", "ppc64le", "s390x", "i386", "loongarch64", "armv7"]
         runs: [ "ubuntu-24.04", "ubuntu-24.04-arm"]
@@ -253,6 +273,22 @@ jobs:
             arch: loongarch64
           - release: "0.4.15"
             arch: armv7
+          - release: "0.4.16"
+            arch: aarch64
+          - release: "0.4.16"
+            arch: riscv64
+          - release: "0.4.16"
+            arch: powerpc64
+          - release: "0.4.16"
+            arch: sparc64
+          - release: "0.4.16"
+            arch: ppc64le
+          - release: "0.4.16"
+            arch: s390x
+          - release: "0.4.16"
+            arch: loongarch64
+          - release: "0.4.16"
+            arch: armv7
           - release: ""
             arch: aarch64
           - release: ""
@@ -273,6 +309,10 @@ jobs:
             arch: ""
           - release: "0.4.15"
             arch: "i386"
+          - release: "0.4.16"
+            arch: ""
+          - release: "0.4.16"
+            arch: "i386"
           - release: ""
             arch: ""
           - release: ""
@@ -291,7 +331,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains(fromJSON('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}')[matrix.arch == '' && 'x86_64' || matrix.arch], 'nfs') }}
       id: test
-      uses: vmactions/reactos-vm@b3033c244d8bcd1a6f59e794252c159f53088846
+      uses: vmactions/reactos-vm@befd295c85cd554d3ac12d1002cfdb6141b838be
       with:
         envs: 'DEBUG MYTOKEN MYTOKEN2'
         prepare: |
@@ -371,7 +411,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        release: [ "0.4.15"
+        release: [ "0.4.15", "0.4.16"
 , ""]
         arch: [ "aarch64", "", "riscv64", "powerpc64", "sparc64", "ppc64le", "s390x", "i386", "loongarch64", "armv7"]
         runs: [ "ubuntu-24.04", "ubuntu-24.04-arm"]
@@ -415,6 +455,22 @@ jobs:
             arch: loongarch64
           - release: "0.4.15"
             arch: armv7
+          - release: "0.4.16"
+            arch: aarch64
+          - release: "0.4.16"
+            arch: riscv64
+          - release: "0.4.16"
+            arch: powerpc64
+          - release: "0.4.16"
+            arch: sparc64
+          - release: "0.4.16"
+            arch: ppc64le
+          - release: "0.4.16"
+            arch: s390x
+          - release: "0.4.16"
+            arch: loongarch64
+          - release: "0.4.16"
+            arch: armv7
           - release: ""
             arch: aarch64
           - release: ""
@@ -434,6 +490,10 @@ jobs:
           - release: "0.4.15"
             arch: ""
           - release: "0.4.15"
+            arch: "i386"
+          - release: "0.4.16"
+            arch: ""
+          - release: "0.4.16"
             arch: "i386"
           - release: ""
             arch: ""
@@ -460,7 +520,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains(fromJSON('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}')[matrix.arch == '' && 'x86_64' || matrix.arch], 'scp') }}
       id: test
-      uses: vmactions/reactos-vm@b3033c244d8bcd1a6f59e794252c159f53088846
+      uses: vmactions/reactos-vm@befd295c85cd554d3ac12d1002cfdb6141b838be
       with:
         envs: 'DEBUG MYTOKEN MYTOKEN2'
         prepare: |
@@ -587,7 +647,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}', 'tar') }}
       id: test
-      uses: vmactions/reactos-vm@b3033c244d8bcd1a6f59e794252c159f53088846
+      uses: vmactions/reactos-vm@befd295c85cd554d3ac12d1002cfdb6141b838be
       with:
         mem: 4096
         debug: true
@@ -657,7 +717,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}', '9p') }}
       id: test
-      uses: vmactions/reactos-vm@b3033c244d8bcd1a6f59e794252c159f53088846
+      uses: vmactions/reactos-vm@befd295c85cd554d3ac12d1002cfdb6141b838be
       with:
         mem: 4096
         debug: true
@@ -703,7 +763,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        release: [ "0.4.15"
+        release: [ "0.4.15", "0.4.16"
 , ""]
         arch: [ "aarch64", "", "riscv64", "powerpc64", "sparc64", "ppc64le", "s390x", "i386", "loongarch64", "armv7"]
         runs: [ "ubuntu-24.04", "ubuntu-24.04-arm"]
@@ -748,6 +808,22 @@ jobs:
             arch: loongarch64
           - release: "0.4.15"
             arch: armv7
+          - release: "0.4.16"
+            arch: aarch64
+          - release: "0.4.16"
+            arch: riscv64
+          - release: "0.4.16"
+            arch: powerpc64
+          - release: "0.4.16"
+            arch: sparc64
+          - release: "0.4.16"
+            arch: ppc64le
+          - release: "0.4.16"
+            arch: s390x
+          - release: "0.4.16"
+            arch: loongarch64
+          - release: "0.4.16"
+            arch: armv7
           - release: ""
             arch: aarch64
           - release: ""
@@ -768,6 +844,10 @@ jobs:
             arch: ""
           - release: "0.4.15"
             arch: "i386"
+          - release: "0.4.16"
+            arch: ""
+          - release: "0.4.16"
+            arch: "i386"
           - release: ""
             arch: ""
           - release: ""
@@ -786,7 +866,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains(fromJSON('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}')[matrix.arch == '' && 'x86_64' || matrix.arch], 'rsync') }}
       id: test
-      uses: vmactions/reactos-vm@b3033c244d8bcd1a6f59e794252c159f53088846
+      uses: vmactions/reactos-vm@befd295c85cd554d3ac12d1002cfdb6141b838be
       with:
         envs: 'MYTOKEN MYTOKEN2'
         prepare: |
@@ -860,7 +940,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        release: [ "0.4.15"
+        release: [ "0.4.15", "0.4.16"
 , ""]
         arch: [ "aarch64", "", "riscv64", "powerpc64", "sparc64", "ppc64le", "s390x", "i386", "loongarch64", "armv7"]
         runs: [ "ubuntu-24.04", "ubuntu-24.04-arm"]
@@ -904,6 +984,22 @@ jobs:
             arch: loongarch64
           - release: "0.4.15"
             arch: armv7
+          - release: "0.4.16"
+            arch: aarch64
+          - release: "0.4.16"
+            arch: riscv64
+          - release: "0.4.16"
+            arch: powerpc64
+          - release: "0.4.16"
+            arch: sparc64
+          - release: "0.4.16"
+            arch: ppc64le
+          - release: "0.4.16"
+            arch: s390x
+          - release: "0.4.16"
+            arch: loongarch64
+          - release: "0.4.16"
+            arch: armv7
           - release: ""
             arch: aarch64
           - release: ""
@@ -924,6 +1020,10 @@ jobs:
             arch: ""
           - release: "0.4.15"
             arch: "i386"
+          - release: "0.4.16"
+            arch: ""
+          - release: "0.4.16"
+            arch: "i386"
           - release: ""
             arch: ""
           - release: ""
@@ -942,7 +1042,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains(fromJSON('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}')[matrix.arch == '' && 'x86_64' || matrix.arch], 'rsync') }}
       id: test
-      uses: vmactions/reactos-vm@b3033c244d8bcd1a6f59e794252c159f53088846
+      uses: vmactions/reactos-vm@befd295c85cd554d3ac12d1002cfdb6141b838be
       with:
         envs: 'MYTOKEN MYTOKEN2'
         prepare: |
@@ -1055,7 +1155,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains(fromJSON('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}')['x86_64'], 'rsync') }}
       id: test
-      uses: vmactions/reactos-vm@b3033c244d8bcd1a6f59e794252c159f53088846
+      uses: vmactions/reactos-vm@befd295c85cd554d3ac12d1002cfdb6141b838be
       with:
         mem: 4096
         debug: true
@@ -1112,7 +1212,7 @@ jobs:
     - name: Test in ReactOS
       if: ${{ contains(fromJSON('{"x86_64":[],"aarch64":[],"riscv64":[],"powerpc64":[],"sparc64":[],"ppc64le":[],"s390x":[],"i386":["tar"],"loongarch64":[],"armv7":[]}')['x86_64'], 'rsync') }}
       id: test
-      uses: vmactions/reactos-vm@b3033c244d8bcd1a6f59e794252c159f53088846
+      uses: vmactions/reactos-vm@befd295c85cd554d3ac12d1002cfdb6141b838be
       with:
         mem: 4096
         debug: true
@@ -1185,7 +1285,7 @@ jobs:
     - name: Test in ReactOS
       id: testerr
       continue-on-error: true
-      uses: vmactions/reactos-vm@b3033c244d8bcd1a6f59e794252c159f53088846
+      uses: vmactions/reactos-vm@befd295c85cd554d3ac12d1002cfdb6141b838be
       with:
         debug: true
         # A command that EXISTS and fails, rather than `false` or a made-up
@@ -1231,7 +1331,7 @@ jobs:
     - name: Test in ReactOS
       id: testpass
       continue-on-error: true
-      uses: vmactions/reactos-vm@b3033c244d8bcd1a6f59e794252c159f53088846
+      uses: vmactions/reactos-vm@befd295c85cd554d3ac12d1002cfdb6141b838be
       with:
         debug: true
         # No `true` and no double quotes: this body runs on every guest, and
